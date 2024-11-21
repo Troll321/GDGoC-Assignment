@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books API</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            position: relative;
+            font-size: 1em;
+            font-family: sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-size: 1em;
+        }
+
+        .bookSuperContainer {
+            width: 100%;
+            height: max-content;
+            box-sizing: border-box;
+            padding: 3em;
+        }
+
+        .bookSuperContainer h1 {
+            font-size: 3em;
+        }
+
+        #bookContainer {
+            margin-top: 1em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
+
+        .book {
+            width: 25em;
+            height: 10em;
+            padding: 1em;
+            background-color: hsl(34, 78%, 91%);
+            border-radius: 0.4em;
+            box-shadow: 0em 0em 0em 0em rgba(0, 0, 0, 0.32);
+            transition: box-shadow 300ms;
+        }
+
+        .book:hover {
+            box-shadow: 0.3em 0.3em 0em 0em rgba(0, 0, 0, 0.32);
+        }
+
+        .book li {
+            width: 100%;
+            height: 1.5em;
+            list-style-type: none;
+        }
+
+        .book li:nth-child(1) {
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1em;
+        }
+
+        .book li:nth-child(1) span:nth-child(2) {
+            padding-left: 0.75em;
+            display: inline-block;
+        }
+
+        .book li:not(:nth-child(1)) span:nth-child(1) {
+            width: 7em;
+            display: inline-block;
+        }
+
+        .book li:not(:nth-child(1)) span:nth-child(2) {
+            padding-left: 0.75em;
+            display: inline-block;
+        }
+
+        .interactContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 3em;
+            width: 40em;
+            height: max-content;
+            box-sizing: border-box;
+            row-gap: 1em;
+        }
+
+        .interactContainer h1 {
+            font-size: 3em;
+        }
+
+        .interactContainer h3 {
+            font-size: 1.5em;
+        }
+
+        .outputContainer {
+            margin-top: 3.5em;
+        }
+        .outputContainer #output {
+            margin-top: 1.5em;
+            letter-spacing: 0.1em;
+        }
+
+        .inputContainer {
+            display: flex;
+            flex-direction: column;
+            row-gap: 0.3em;
+            width: 100%;
+        }
+        .inputContainer label {
+            font-size: 1.25em;
+        }
+        .inputContainer input {
+            display: block;
+            width: 100%;
+            height: 2em;
+            border-radius: 0.25em;
+            box-sizing: border-box;
+            padding: 0px 0.5em;
+        }
+
+        .interactContainer button {
+            background-color: rgb(246, 246, 246);
+            padding: 0.7em 1em;
+            border-radius: 0.25em;
+            min-width: 6em;
+            transition: background-color 200ms;
+            margin-top: 1em;
+        }
+
+        .interactContainer button.submit {
+            background-color: rgb(212, 255, 198);
+            font-weight: 600;
+        }
+
+        .interactContainer button:hover {
+            background-color: rgb(227, 227, 227);
+        }
+
+        .interactContainer button.submit:hover {
+            background-color: rgb(171, 235, 149);
+        }
+
+        #createForm {
+            width: 100%;
+            height: max-content;
+        }
+
+        #createForm div:nth-child(1) button {
+            margin-top: 0.5em;
+        }
+
+        .subFormContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            row-gap: 1em;
+            margin: 3em 0em 0.25em;
+        }
+
+        .interactContainer > .line {
+            width: 100%;
+            background-color: black;
+            height: 0.25em;
+            margin: 2.5em 0px 1em;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .subInteractContainer {
+            width: 100%;
+            height: max-content;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            row-gap: 3em;
+        }
+
+        .methodContainer {
+            width: 100%;
+            height: max-content;
+        }
+
+        .methodContainer .inputContainer {
+            margin-top: 1em;
+        }
+
+        .subline {
+            background-color: black;
+            opacity: 0.3;
+            width: 100%;
+            height: 0.1em;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="bookSuperContainer">
+        <h1>Books:</h1>
+        <div id="bookContainer">
+            <!-- <ul class="book">
+                <li><span>itle:</span><span class"title"></span></li>
+                <li><span>uthor:</span><span class"author"></span></li>
+                <li><span>ublished At:</span><span class"published_at"></span></li>
+                <li><span>reated At:</span><span class"created_at"></span></li>
+                <li><span>pdated At:</span><span class"updated_at"></span></li>
+                <li><span>D:</span><span class"id"></span></li>
+            </div> -->
+        </div>
+    </div>
+    <div class="interactContainer">
+        <h1>Interact:</h1>       
+
+        <form id="createForm">
+            <div>
+                <h3>Create:</h3>
+                <button id="setDateButton" type="button">Set Date to now</button>
+            </div>
+            <div class="subFormContainer">
+                <div class="inputContainer">
+                    <label for="Ctitle">Title</label>
+                    <input name="title" id="Ctitle" type="text">
+                </div>
+                <div class="inputContainer">
+                    <label for="Cauthor">Author</label>
+                    <input name="author" id="Cauthor" type="text">
+                </div>
+                <div class="inputContainer">
+                    <label for="Cpublished_at">Published At</label>
+                    <input name="published_at" id="Cpublished_at" type="text">
+                </div>
+            </div>
+            <button type="submit" class="submit">Create</button>
+        </form>
+
+        <div class="line"></div>
+
+        <div class="subInteractContainer">
+            <div class="inputContainer">
+                <label for="id">ID</label>
+                <input name="id" id="id" type="text">
+            </div>
+
+            <div class="subline"></div>
+
+            <div class="methodContainer">
+                <h3>Update:</h3>
+                <div class="inputContainer">
+                    <label for="title">Title</label>
+                    <input name="title" id="title" type="text">
+                </div>
+                <button id="updateButton" class="submit">Update</button>
+            </div>
+            
+            <div class="methodContainer">
+                <h3>Get Specific:</h3>
+                <button id="getSpecificButton" class="submit">Get</button>
+            </div>
+
+            <div class="methodContainer">
+                <h3>Delete:</h3>
+                <button id="deleteButton" class="submit">Delete</button>
+            </div>
+
+        </div>
+
+        <div class="outputContainer">
+            <h1>Output:</h1>
+            <pre id="output"></pre>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <br><br><br><br><br><br>
+    <script>
+        const bookContainer = document.getElementById("bookContainer");
+        function formatDate(date) {
+            return `${date.getFullYear()}-${date.getUTCMonth()+1}-${date.getDate()}`;
+        }
+
+        function appendBook(book, index) {
+            const elem = document.createElement("ul");
+            elem.classList.add("book");
+            elem.innerHTML = `
+            <li><span>Title</span>:<span class="title">${book.title}</span></li>
+            <li><span>Author</span>:<span class="author">${book.author}</span></li>
+            <li><span>Published At</span>:<span class="published_at">${book.published_at}</span></li>
+            <li><span>Created At</span>:<span class="created_at">${book.created_at}</span></li>
+            <li><span>Updated At</span>:<span class="updated_at">${book.updated_at}</span></li>
+            <li><span>ID</span>:<span class="id">${book.id}</span></li>
+            `;
+            elem.id = book.id;
+            elem.dataset.index = index;
+            elem.style.backgroundColor = `hsl(${Math.floor(Math.random()*360)}, 78%, 91%)`
+            bookContainer.appendChild(elem);
+        }
+
+        const idInput = document.getElementById("id");
+        const titleInput = document.getElementById("title");
+        const updateButton = document.getElementById("updateButton");
+        const deleteButton = document.getElementById("deleteButton");
+        const getSpecificButton = document.getElementById("getSpecificButton");
+        const createForm = document.getElementById("createForm");
+        const output = document.getElementById("output");
+        const setDateButton = document.getElementById("setDateButton");
+        const Cpublished_at = document.getElementById("Cpublished_at");
+        document.addEventListener("DOMContentLoaded", async ()=>{
+            // Populate Book
+            const res = await fetch("/api/books");
+            const {data} = await res.json();
+            data.forEach((book, index) => {
+                appendBook(book, index);
+            });
+        });
+        updateButton.addEventListener("click", async ()=>{
+            if (!idInput.value) {
+                output.innerText = "Please Input ID first!";
+                return ;
+            }
+            const res = await fetch("/api/books/"+idInput.value, {
+                method: "PUT",
+                body: JSON.stringify({"title": titleInput.value}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const hasil = await res.json();
+            output.innerText = JSON.stringify(hasil, null, 4);
+            if(res.status === 200) {
+                const nowid = parseInt(document.getElementById(idInput.value).dataset.index);
+                document.getElementsByClassName("title")[nowid].innerText = titleInput.value;
+                document.getElementsByClassName("updated_at")[nowid].innerText = hasil.data.updated_at;
+            }
+        });
+        deleteButton.addEventListener("click", async ()=>{
+            if (!idInput.value) {
+                output.innerText = "Please Input ID first!";
+                return ;
+            }
+            const res = await fetch("/api/books/"+idInput.value, {
+                method: "DELETE"
+            });
+            output.innerText = JSON.stringify(await res.json(), null, 4);
+            if (res.status === 200) {
+                document.getElementById(idInput.value).remove();
+            }
+        });
+        getSpecificButton.addEventListener("click", async ()=>{
+            if (!idInput.value) {
+                output.innerText = "Please Input ID first!";
+                return ;
+            }
+            const res = await fetch("/api/books/"+idInput.value, {
+                method: "GET"
+            });
+            output.innerText = JSON.stringify(await res.json(), null, 4);
+        });
+        createForm.addEventListener("submit", async (e)=>{
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const body = {};
+            for (const [field,val] of formData) {
+                body[field] = val;                
+            }
+            const res = await fetch("/api/books", {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const hasil = await res.json();
+            output.innerText = JSON.stringify(hasil, null, 4);
+            if (res.status === 201) {
+                appendBook(hasil.data, document.getElementsByClassName("title").length);
+            }
+        });
+        setDateButton.addEventListener("click", ()=>{
+            Cpublished_at.value = formatDate(new Date(Date.now()));
+        });
+    </script>
+</body>
+</html>
